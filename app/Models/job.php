@@ -10,13 +10,23 @@ class Job extends Model{
 
    protected $fillable = ['title', 'salary'];
 
-   public function employer(){
+   /**
+    * Get the employer that owns the Job
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+   public function employer()
+   {
        return $this->belongsTo(Employer::class);
    }
 
-   public function tags(){
-
-      return $this->belongsToMany(Tag::class, foreignPivotKey:"job_listing_id");
-
+   /**
+    * The tags that belong to the Job
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+   public function tags()
+   {
+       return $this->belongsToMany(Tag::class, 'job_listing_tag', 'job_listing_id', 'tag_id');
    }
 }
